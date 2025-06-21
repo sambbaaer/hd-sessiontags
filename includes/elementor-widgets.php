@@ -16,32 +16,32 @@ class HumanDesign_Elementor_Extension {
 
     public function register_category($elements_manager) {
         $elements_manager->add_category('human-design', array(
-            'title' => 'Human Design',
+            'title' => __('Human Design', 'sessiontags-humandesign'),
             'icon' => 'fa fa-star',
         ));
     }
 
-    public function register_widgets() {
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \HumanDesign_Calculator_Widget());
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \HumanDesign_Type_Display_Widget());
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \HumanDesign_Conditional_Content_Widget());
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \HumanDesign_Personalized_CTA_Widget());
+    public function register_widgets($widgets_manager) {
+        $widgets_manager->register(new \HumanDesign_Calculator_Widget());
+        $widgets_manager->register(new \HumanDesign_Type_Display_Widget());
+        $widgets_manager->register(new \HumanDesign_Conditional_Content_Widget());
+        $widgets_manager->register(new \HumanDesign_Personalized_CTA_Widget());
     }
 }
 
 new HumanDesign_Elementor_Extension();
 
 /**
- * Human Design Calculator Widget für Elementor
+ * Human Design Rechner Widget für Elementor
  */
 class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
 
     public function get_name() {
-        return 'hd-calculator';
+        return 'hd-rechner';
     }
 
     public function get_title() {
-        return 'Human Design Calculator';
+        return __('Human Design Rechner', 'sessiontags-humandesign');
     }
 
     public function get_icon() {
@@ -52,13 +52,13 @@ class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
         return ['human-design'];
     }
 
-    protected function _register_controls() {
+    protected function register_controls() {
 
         // Content Section
         $this->start_controls_section(
             'content_section',
             [
-                'label' => 'Calculator Settings',
+                'label' => __('Rechner-Einstellungen', 'sessiontags-humandesign'),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -66,12 +66,12 @@ class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'calculator_style',
             [
-                'label' => 'Calculator Style',
+                'label' => __('Rechner-Stil', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'default' => 'full',
                 'options' => [
-                    'full' => 'Vollständig',
-                    'minimal' => 'Minimal',
+                    'full' => __('Vollständig', 'sessiontags-humandesign'),
+                    'minimal' => __('Minimal', 'sessiontags-humandesign'),
                 ],
             ]
         );
@@ -79,7 +79,7 @@ class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'title',
             [
-                'label' => 'Titel',
+                'label' => __('Titel', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'default' => '🔮 Entdecke deinen Human Design Typ',
                 'condition' => [
@@ -91,7 +91,7 @@ class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'subtitle',
             [
-                'label' => 'Untertitel',
+                'label' => __('Untertitel', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::TEXTAREA,
                 'default' => 'In nur 30 Sekunden zu deiner personalisierten Website-Erfahrung',
                 'condition' => [
@@ -103,10 +103,10 @@ class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'redirect_after_calculation',
             [
-                'label' => 'Nach Berechnung weiterleiten',
+                'label' => __('Nach Berechnung weiterleiten', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_on' => 'Ja',
-                'label_off' => 'Nein',
+                'label_on' => __('Ja', 'sessiontags-humandesign'),
+                'label_off' => __('Nein', 'sessiontags-humandesign'),
                 'return_value' => 'yes',
                 'default' => 'no',
             ]
@@ -115,10 +115,10 @@ class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'show_if_calculated',
             [
-                'label' => 'Auch nach Berechnung anzeigen',
+                'label' => __('Auch nach Berechnung anzeigen', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_on' => 'Ja',
-                'label_off' => 'Nein',
+                'label_on' => __('Ja', 'sessiontags-humandesign'),
+                'label_off' => __('Nein', 'sessiontags-humandesign'),
                 'return_value' => 'yes',
                 'default' => 'no',
             ]
@@ -130,7 +130,7 @@ class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
         $this->start_controls_section(
             'style_section',
             [
-                'label' => 'Style',
+                'label' => __('Stil', 'sessiontags-humandesign'),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
@@ -138,7 +138,7 @@ class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'primary_color',
             [
-                'label' => 'Primary Color',
+                'label' => __('Hauptfarbe', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'default' => '#667eea',
                 'selectors' => [
@@ -151,7 +151,7 @@ class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'border_radius',
             [
-                'label' => 'Border Radius',
+                'label' => __('Rand-Radius', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -173,98 +173,31 @@ class HumanDesign_Calculator_Widget extends \Elementor\Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-        $widget_id = 'hd-calc-' . $this->get_id();
 
-        // Don't show if already calculated (unless specified)
-        if ($settings['show_if_calculated'] !== 'yes' && !empty($_SESSION['hd_calculated'])) {
-            echo '<div class="hd-already-calculated">✅ Human Design Typ bereits ermittelt: <strong>' . esc_html($_SESSION['hd_type'] ?? 'Unbekannt') . '</strong></div>';
+        $show_if_calculated = $settings['show_if_calculated'] === 'yes';
+
+        if (!$show_if_calculated && !empty($_SESSION['hd_calculated'])) {
+            echo '<div class="hd-already-calculated">✅ ' . __('Human Design Typ bereits ermittelt:', 'sessiontags-humandesign') . ' <strong>' . esc_html($_SESSION['hd_type'] ?? 'Unbekannt') . '</strong></div>';
             return;
         }
 
-        ?>
-        <div class="hd-calculator-elementor hd-calculator-<?php echo esc_attr($settings['calculator_style']); ?>">
-            <?php if ($settings['calculator_style'] !== 'minimal'): ?>
-                <div class="hd-calculator-header">
-                    <?php if (!empty($settings['title'])): ?>
-                        <h3><?php echo esc_html($settings['title']); ?></h3>
-                    <?php endif; ?>
-                    <?php if (!empty($settings['subtitle'])): ?>
-                        <p><?php echo esc_html($settings['subtitle']); ?></p>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
-
-            <form class="hd-calculator-form" data-widget-id="<?php echo esc_attr($widget_id); ?>" data-redirect="<?php echo esc_attr($settings['redirect_after_calculation']); ?>">
-                <?php wp_nonce_field('hd_calculation_nonce', 'hd_nonce'); ?>
-
-                <div class="hd-form-grid">
-                    <div class="hd-form-group">
-                        <label>Geburtsdatum:</label>
-                        <input type="date" name="birth_date" required max="<?php echo date('Y-m-d'); ?>">
-                    </div>
-
-                    <div class="hd-time-row">
-                        <div class="hd-form-group hd-form-half">
-                            <label>Stunde:</label>
-                            <select name="birth_hour" required>
-                                <option value="">--</option>
-                                <?php for ($h = 0; $h < 24; $h++): ?>
-                                    <option value="<?php echo $h; ?>"><?php echo sprintf('%02d', $h); ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                        <div class="hd-form-group hd-form-half">
-                            <label>Minute:</label>
-                            <select name="birth_minute" required>
-                                <option value="">--</option>
-                                <?php for ($m = 0; $m < 60; $m += 5): ?>
-                                    <option value="<?php echo $m; ?>"><?php echo sprintf('%02d', $m); ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-
-                    <?php if ($settings['calculator_style'] === 'full'): ?>
-                        <div class="hd-form-group">
-                            <label>Geburtsort:</label>
-                            <input type="text" name="birth_location" placeholder="z.B. Zürich, Schweiz" required>
-                        </div>
-                    <?php else: ?>
-                        <input type="hidden" name="birth_location" value="Zurich, Switzerland">
-                    <?php endif; ?>
-                </div>
-
-                <button type="submit" class="hd-calculate-btn">
-                    <span class="hd-btn-text">✨ Typ ermitteln</span>
-                    <span class="hd-btn-loading" style="display: none;">
-                        <div class="hd-spinner"></div> Berechne...
-                    </span>
-                </button>
-            </form>
-
-            <div class="hd-result" style="display: none;">
-                <div class="hd-result-content"></div>
-            </div>
-
-            <div class="hd-error" style="display: none;">
-                <div class="hd-error-content"></div>
-            </div>
-        </div>
-        <?php
+        // We use the shortcode to render the calculator to ensure JS/CSS are loaded correctly
+        echo do_shortcode('[hd_calculator style="' . esc_attr($settings['calculator_style']) . '" redirect="' . esc_attr($settings['redirect_after_calculation']) . '" show_if_calculated="true"]');
     }
 }
 
+
 /**
- * Human Design Type Display Widget
+ * Human Design Typ Anzeige Widget
  */
 class HumanDesign_Type_Display_Widget extends \Elementor\Widget_Base {
 
     public function get_name() {
-        return 'hd-type-display';
+        return 'hd-typ-anzeige';
     }
 
     public function get_title() {
-        return 'Human Design Type Display';
+        return __('Human Design Typ Anzeige', 'sessiontags-humandesign');
     }
 
     public function get_icon() {
@@ -275,12 +208,12 @@ class HumanDesign_Type_Display_Widget extends \Elementor\Widget_Base {
         return ['human-design'];
     }
 
-    protected function _register_controls() {
+    protected function register_controls() {
 
         $this->start_controls_section(
             'content_section',
             [
-                'label' => 'Content',
+                'label' => __('Inhalt', 'sessiontags-humandesign'),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -288,13 +221,13 @@ class HumanDesign_Type_Display_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'display_style',
             [
-                'label' => 'Display Style',
+                'label' => __('Anzeige-Stil', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'default' => 'badge',
                 'options' => [
-                    'badge' => 'Badge',
-                    'card' => 'Card',
-                    'text' => 'Text Only',
+                    'badge' => __('Badge', 'sessiontags-humandesign'),
+                    'card' => __('Karte', 'sessiontags-humandesign'),
+                    'text' => __('Nur Text', 'sessiontags-humandesign'),
                 ],
             ]
         );
@@ -302,10 +235,10 @@ class HumanDesign_Type_Display_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'show_strategy',
             [
-                'label' => 'Strategie anzeigen',
+                'label' => __('Strategie anzeigen', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_on' => 'Ja',
-                'label_off' => 'Nein',
+                'label_on' => __('Ja', 'sessiontags-humandesign'),
+                'label_off' => __('Nein', 'sessiontags-humandesign'),
                 'return_value' => 'yes',
                 'default' => 'yes',
                 'condition' => [
@@ -317,10 +250,10 @@ class HumanDesign_Type_Display_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'show_description',
             [
-                'label' => 'Beschreibung anzeigen',
+                'label' => __('Beschreibung anzeigen', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_on' => 'Ja',
-                'label_off' => 'Nein',
+                'label_on' => __('Ja', 'sessiontags-humandesign'),
+                'label_off' => __('Nein', 'sessiontags-humandesign'),
                 'return_value' => 'yes',
                 'default' => 'no',
                 'condition' => [
@@ -332,9 +265,9 @@ class HumanDesign_Type_Display_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'fallback_text',
             [
-                'label' => 'Fallback Text',
+                'label' => __('Fallback-Text', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => 'Typ noch nicht ermittelt',
+                'default' => __('Typ noch nicht ermittelt.', 'sessiontags-humandesign'),
             ]
         );
 
@@ -352,18 +285,19 @@ class HumanDesign_Type_Display_Widget extends \Elementor\Widget_Base {
 
         $strategy = $_SESSION['hd_strategy'] ?? '';
         $description = $this->get_type_description($type);
+        $color = $this->get_type_colors($type)['primary'];
 
         ?>
         <div class="hd-type-display hd-display-<?php echo esc_attr($settings['display_style']); ?>">
             <?php if ($settings['display_style'] === 'badge'): ?>
-                <span class="hd-type-badge"><?php echo esc_html($type); ?></span>
+                <span class="hd-type-badge" style="background-color: <?php echo esc_attr($color); ?>;"><?php echo esc_html($type); ?></span>
                 <?php if ($settings['show_strategy'] === 'yes' && $strategy): ?>
                     <span class="hd-strategy-text"><?php echo esc_html($strategy); ?></span>
                 <?php endif; ?>
 
             <?php elseif ($settings['display_style'] === 'card'): ?>
-                <div class="hd-type-card">
-                    <h3><?php echo esc_html($type); ?></h3>
+                <div class="hd-type-card" style="border-left-color: <?php echo esc_attr($color); ?>;">
+                    <h3 style="color: <?php echo esc_attr($color); ?>;"><?php echo esc_html($type); ?></h3>
                     <?php if ($settings['show_strategy'] === 'yes' && $strategy): ?>
                         <p class="hd-strategy"><strong>Strategie:</strong> <?php echo esc_html($strategy); ?></p>
                     <?php endif; ?>
@@ -382,43 +316,55 @@ class HumanDesign_Type_Display_Widget extends \Elementor\Widget_Base {
     private function get_type_description($type) {
         $descriptions = array(
             'Generator' => 'Du bist hier um zu arbeiten und zu erschaffen. Folge deiner Begeisterung!',
+            'Manifesting Generator' => 'Du bist ein Multitalent mit der Kraft zu manifestieren.',
             'ManifestingGenerator' => 'Du bist ein Multitalent mit der Kraft zu manifestieren.',
             'Projector' => 'Du bist ein natürlicher Leiter. Warte auf Anerkennung.',
             'Manifestor' => 'Du bist ein Initiator. Informiere andere über deine Pläne.',
             'Reflector' => 'Du bist ein Spiegel der Gemeinschaft. Lass dir Zeit.'
         );
-
         return $descriptions[$type] ?? '';
+    }
+
+    private function get_type_colors($type) {
+        $colors = array(
+            'Generator' => array( 'primary' => '#e74c3c' ),
+            'Manifesting Generator' => array( 'primary' => '#e67e22' ),
+            'ManifestingGenerator' => array( 'primary' => '#e67e22' ),
+            'Projector' => array( 'primary' => '#3498db' ),
+            'Manifestor' => array( 'primary' => '#2ecc71' ),
+            'Reflector' => array( 'primary' => '#9b59b6' )
+        );
+        return $colors[$type] ?? $colors['Generator'];
     }
 }
 
 /**
- * Human Design Conditional Content Widget
+ * Bedingte Human Design Inhalte Widget
  */
 class HumanDesign_Conditional_Content_Widget extends \Elementor\Widget_Base {
 
     public function get_name() {
-        return 'hd-conditional-content';
+        return 'hd-bedingte-inhalte';
     }
 
     public function get_title() {
-        return 'Human Design Conditional Content';
+        return __('Bedingte Human Design Inhalte', 'sessiontags-humandesign');
     }
 
     public function get_icon() {
-        return 'eicon-conditional-module';
+        return 'eicon-code';
     }
 
     public function get_categories() {
         return ['human-design'];
     }
 
-    protected function _register_controls() {
+    protected function register_controls() {
 
         $this->start_controls_section(
             'condition_section',
             [
-                'label' => 'Condition',
+                'label' => __('Bedingung', 'sessiontags-humandesign'),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -426,15 +372,14 @@ class HumanDesign_Conditional_Content_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'condition_type',
             [
-                'label' => 'Condition Type',
+                'label' => __('Bedingungstyp', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SELECT,
-                'default' => 'show_for_type',
+                'default' => 'show_for_types',
                 'options' => [
-                    'show_for_type' => 'Show for specific type',
-                    'hide_for_type' => 'Hide for specific type',
-                    'show_for_types' => 'Show for multiple types',
-                    'show_if_calculated' => 'Show only if calculated',
-                    'show_if_not_calculated' => 'Show only if not calculated',
+                    'show_for_types' => __('Zeige für bestimmte Typen', 'sessiontags-humandesign'),
+                    'hide_for_types' => __('Verberge für bestimmte Typen', 'sessiontags-humandesign'),
+                    'show_if_calculated' => __('Zeige nur, wenn Typ berechnet wurde', 'sessiontags-humandesign'),
+                    'show_if_not_calculated' => __('Zeige nur, wenn Typ NICHT berechnet wurde', 'sessiontags-humandesign'),
                 ],
             ]
         );
@@ -442,18 +387,18 @@ class HumanDesign_Conditional_Content_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'target_types',
             [
-                'label' => 'Target Types',
+                'label' => __('Ziel-Typen', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SELECT2,
                 'multiple' => true,
                 'options' => [
                     'Generator' => 'Generator',
-                    'ManifestingGenerator' => 'Manifesting Generator',
+                    'Manifesting Generator' => 'Manifesting Generator',
                     'Projector' => 'Projector',
                     'Manifestor' => 'Manifestor',
                     'Reflector' => 'Reflector',
                 ],
                 'condition' => [
-                    'condition_type' => ['show_for_type', 'hide_for_type', 'show_for_types'],
+                    'condition_type' => ['show_for_types', 'hide_for_types'],
                 ],
             ]
         );
@@ -463,7 +408,7 @@ class HumanDesign_Conditional_Content_Widget extends \Elementor\Widget_Base {
         $this->start_controls_section(
             'content_section',
             [
-                'label' => 'Content',
+                'label' => __('Inhalt', 'sessiontags-humandesign'),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -471,9 +416,9 @@ class HumanDesign_Conditional_Content_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'content',
             [
-                'label' => 'Content',
+                'label' => __('Inhalt', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::WYSIWYG,
-                'default' => 'This content will be shown based on the conditions above.',
+                'default' => __('Dieser Inhalt wird basierend auf der Bedingung angezeigt.', 'sessiontags-humandesign'),
             ]
         );
 
@@ -483,21 +428,21 @@ class HumanDesign_Conditional_Content_Widget extends \Elementor\Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
         $current_type = $_SESSION['hd_type'] ?? '';
+        // Unify type name for matching
+        if ($current_type === 'ManifestingGenerator') {
+            $current_type = 'Manifesting Generator';
+        }
         $is_calculated = !empty($_SESSION['hd_calculated']);
 
         $show_content = false;
 
         switch ($settings['condition_type']) {
-            case 'show_for_type':
-                $show_content = in_array($current_type, $settings['target_types']);
-                break;
-
-            case 'hide_for_type':
-                $show_content = !in_array($current_type, $settings['target_types']);
-                break;
-
             case 'show_for_types':
-                $show_content = in_array($current_type, $settings['target_types']);
+                $show_content = !empty($current_type) && in_array($current_type, (array) $settings['target_types']);
+                break;
+
+            case 'hide_for_types':
+                $show_content = empty($current_type) || !in_array($current_type, (array) $settings['target_types']);
                 break;
 
             case 'show_if_calculated':
@@ -515,17 +460,18 @@ class HumanDesign_Conditional_Content_Widget extends \Elementor\Widget_Base {
     }
 }
 
+
 /**
- * Human Design Personalized CTA Widget
+ * Personalisierter Human Design CTA Widget
  */
 class HumanDesign_Personalized_CTA_Widget extends \Elementor\Widget_Base {
 
     public function get_name() {
-        return 'hd-personalized-cta';
+        return 'hd-personalisierter-cta';
     }
 
     public function get_title() {
-        return 'Human Design Personalized CTA';
+        return __('Personalisierter HD CTA', 'sessiontags-humandesign');
     }
 
     public function get_icon() {
@@ -536,105 +482,42 @@ class HumanDesign_Personalized_CTA_Widget extends \Elementor\Widget_Base {
         return ['human-design'];
     }
 
-    protected function _register_controls() {
+    protected function register_controls() {
 
         $this->start_controls_section(
             'cta_section',
             [
-                'label' => 'CTA Settings',
+                'label' => __('CTA Einstellungen', 'sessiontags-humandesign'),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
             ]
         );
 
-        // Generator CTA
-        $this->add_control(
-            'generator_heading',
-            [
-                'label' => 'Generator CTA',
-                'type' => \Elementor\Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'generator_text',
-            [
-                'label' => 'Generator Text',
-                'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => '🔥 Generator Reading buchen',
-            ]
-        );
-
-        $this->add_control(
-            'generator_url',
-            [
-                'label' => 'Generator URL',
-                'type' => \Elementor\Controls_Manager::URL,
-                'default' => [
-                    'url' => '/reading-buchen/?type=generator',
-                ],
-            ]
-        );
-
-        // Projector CTA
-        $this->add_control(
-            'projector_heading',
-            [
-                'label' => 'Projector CTA',
-                'type' => \Elementor\Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'projector_text',
-            [
-                'label' => 'Projector Text',
-                'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => '👑 Projector Reading buchen',
-            ]
-        );
-
-        $this->add_control(
-            'projector_url',
-            [
-                'label' => 'Projector URL',
-                'type' => \Elementor\Controls_Manager::URL,
-                'default' => [
-                    'url' => '/reading-buchen/?type=projector',
-                ],
-            ]
-        );
-
         // Default CTA
-        $this->add_control(
-            'default_heading',
-            [
-                'label' => 'Default CTA (kein Typ)',
-                'type' => \Elementor\Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
+        $this->add_control( 'default_heading', [ 'label' => __('Default CTA (kein Typ)', 'sessiontags-humandesign'), 'type' => \Elementor\Controls_Manager::HEADING, 'separator' => 'before' ] );
+        $this->add_control( 'default_text', [ 'label' => __('Default Text', 'sessiontags-humandesign'), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => '✨ Typ ermitteln & Reading buchen' ] );
+        $this->add_control( 'default_url', [ 'label' => __('Default URL', 'sessiontags-humandesign'), 'type' => \Elementor\Controls_Manager::URL, 'default' => [ 'url' => '#hd-rechner' ] ] );
 
-        $this->add_control(
-            'default_text',
-            [
-                'label' => 'Default Text',
-                'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => '✨ Typ ermitteln und Reading buchen',
-            ]
-        );
+        $types = [
+            'generator' => __('Generator', 'sessiontags-humandesign'),
+            'manifesting_generator' => __('Manifesting Generator', 'sessiontags-humandesign'),
+            'projector' => __('Projector', 'sessiontags-humandesign'),
+            'manifestor' => __('Manifestor', 'sessiontags-humandesign'),
+            'reflector' => __('Reflector', 'sessiontags-humandesign'),
+        ];
 
-        $this->add_control(
-            'default_url',
-            [
-                'label' => 'Default URL',
-                'type' => \Elementor\Controls_Manager::URL,
-                'default' => [
-                    'url' => '#hd-calculator',
-                ],
-            ]
-        );
+        $default_texts = [
+            'generator' => '🔥 Generator Reading buchen',
+            'manifesting_generator' => '🚀 MG Reading buchen',
+            'projector' => '👑 Projector Reading buchen',
+            'manifestor' => '⚡️ Manifestor Reading buchen',
+            'reflector' => '🌙 Reflector Reading buchen',
+        ];
+
+        foreach ($types as $key => $type_name) {
+            $this->add_control( $key . '_heading', [ 'label' => $type_name . ' CTA', 'type' => \Elementor\Controls_Manager::HEADING, 'separator' => 'before' ] );
+            $this->add_control( $key . '_text', [ 'label' => $type_name . ' Text', 'type' => \Elementor\Controls_Manager::TEXT, 'default' => $default_texts[$key] ] );
+            $this->add_control( $key . '_url', [ 'label' => $type_name . ' URL', 'type' => \Elementor\Controls_Manager::URL, 'default' => [ 'url' => '/reading-buchen/?type=' . str_replace('_', '-', $key) ] ] );
+        }
 
         $this->end_controls_section();
     }
@@ -643,32 +526,45 @@ class HumanDesign_Personalized_CTA_Widget extends \Elementor\Widget_Base {
         $settings = $this->get_settings_for_display();
         $current_type = $_SESSION['hd_type'] ?? '';
 
-        // Determine CTA text and URL based on type
         $cta_text = $settings['default_text'];
-        $cta_url = $settings['default_url']['url'];
+        $cta_url_data = $settings['default_url'];
 
-        switch ($current_type) {
-            case 'Generator':
-            case 'ManifestingGenerator':
-                $cta_text = $settings['generator_text'];
-                $cta_url = $settings['generator_url']['url'];
-                break;
+        $type_map = [
+            'Generator' => 'generator',
+            'Manifesting Generator' => 'manifesting_generator',
+            'ManifestingGenerator' => 'manifesting_generator',
+            'Projector' => 'projector',
+            'Manifestor' => 'manifestor',
+            'Reflector' => 'reflector',
+        ];
 
-            case 'Projector':
-                $cta_text = $settings['projector_text'];
-                $cta_url = $settings['projector_url']['url'];
-                break;
+        $type_key = $type_map[$current_type] ?? null;
 
-            // Add more types as needed
+        if ($type_key && !empty($settings[$type_key . '_text'])) {
+            $cta_text = $settings[$type_key . '_text'];
+            $cta_url_data = $settings[$type_key . '_url'];
+        }
+
+        $this->add_render_attribute('button', 'href', esc_url($cta_url_data['url']));
+        if (!empty($cta_url_data['is_external'])) {
+            $this->add_render_attribute('button', 'target', '_blank');
+        }
+        if (!empty($cta_url_data['nofollow'])) {
+            $this->add_render_attribute('button', 'rel', 'nofollow');
+        }
+
+        $this->add_render_attribute('button', 'class', 'elementor-button');
+        $this->add_render_attribute('button', 'class', 'hd-cta-button');
+        if($current_type) {
+            $this->add_render_attribute('button', 'class', 'hd-type-' . strtolower(str_replace(' ', '-', $current_type)));
         }
 
         ?>
-        <div class="hd-personalized-cta">
-            <a href="<?php echo esc_url($cta_url); ?>" class="hd-cta-button hd-type-<?php echo strtolower($current_type); ?>">
+        <div class="hd-personalized-cta-widget">
+            <a <?php echo $this->get_render_attribute_string('button'); ?>>
                 <?php echo esc_html($cta_text); ?>
             </a>
         </div>
         <?php
     }
 }
-?>

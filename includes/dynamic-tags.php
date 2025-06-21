@@ -8,16 +8,16 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Human Design Type Dynamic Tag
+ * Human Design Typ Dynamic Tag
  */
 class HumanDesign_Type_Tag extends \Elementor\Core\DynamicTags\Tag {
 
     public function get_name() {
-        return 'hd-type';
+        return 'hd-typ';
     }
 
     public function get_title() {
-        return 'Human Design Type';
+        return __('Human Design Typ', 'sessiontags-humandesign');
     }
 
     public function get_group() {
@@ -30,23 +30,23 @@ class HumanDesign_Type_Tag extends \Elementor\Core\DynamicTags\Tag {
         ];
     }
 
-    protected function _register_controls() {
+    protected function register_controls() {
         $this->add_control(
             'fallback',
             [
-                'label' => 'Fallback Text',
+                'label' => __('Fallback-Text', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => 'Typ noch nicht ermittelt',
+                'default' => __('Typ unbekannt', 'sessiontags-humandesign'),
             ]
         );
 
         $this->add_control(
             'show_calculator_link',
             [
-                'label' => 'Calculator Link bei fehlendem Typ',
+                'label' => __('Link zum Rechner anzeigen, falls Typ fehlt', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_on' => 'Ja',
-                'label_off' => 'Nein',
+                'label_on' => __('Ja', 'sessiontags-humandesign'),
+                'label_off' => __('Nein', 'sessiontags-humandesign'),
                 'return_value' => 'yes',
                 'default' => 'no',
             ]
@@ -59,7 +59,7 @@ class HumanDesign_Type_Tag extends \Elementor\Core\DynamicTags\Tag {
 
         if (empty($type)) {
             if ($settings['show_calculator_link'] === 'yes') {
-                echo '<a href="#hd-calculator" class="hd-calculate-link">' . esc_html($settings['fallback']) . ' ✨</a>';
+                echo '<a href="#hd-rechner" class="hd-calculate-link">' . esc_html($settings['fallback']) . ' ✨</a>';
             } else {
                 echo esc_html($settings['fallback']);
             }
@@ -70,16 +70,16 @@ class HumanDesign_Type_Tag extends \Elementor\Core\DynamicTags\Tag {
 }
 
 /**
- * Human Design Strategy Dynamic Tag
+ * Human Design Strategie Dynamic Tag
  */
 class HumanDesign_Strategy_Tag extends \Elementor\Core\DynamicTags\Tag {
 
     public function get_name() {
-        return 'hd-strategy';
+        return 'hd-strategie';
     }
 
     public function get_title() {
-        return 'Human Design Strategy';
+        return __('Human Design Strategie', 'sessiontags-humandesign');
     }
 
     public function get_group() {
@@ -92,22 +92,22 @@ class HumanDesign_Strategy_Tag extends \Elementor\Core\DynamicTags\Tag {
         ];
     }
 
-    protected function _register_controls() {
+    protected function register_controls() {
         $this->add_control(
             'fallback',
             [
-                'label' => 'Fallback Text',
+                'label' => __('Fallback-Text', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => 'Strategie unbekannt',
+                'default' => __('Strategie unbekannt', 'sessiontags-humandesign'),
             ]
         );
 
         $this->add_control(
             'prefix',
             [
-                'label' => 'Prefix',
+                'label' => __('Präfix', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => 'Deine Strategie: ',
+                'default' => __('Deine Strategie: ', 'sessiontags-humandesign'),
             ]
         );
     }
@@ -125,16 +125,16 @@ class HumanDesign_Strategy_Tag extends \Elementor\Core\DynamicTags\Tag {
 }
 
 /**
- * Human Design Description Dynamic Tag
+ * Human Design Beschreibung Dynamic Tag
  */
 class HumanDesign_Description_Tag extends \Elementor\Core\DynamicTags\Tag {
 
     public function get_name() {
-        return 'hd-description';
+        return 'hd-beschreibung';
     }
 
     public function get_title() {
-        return 'Human Design Description';
+        return __('Human Design Beschreibung', 'sessiontags-humandesign');
     }
 
     public function get_group() {
@@ -147,25 +147,25 @@ class HumanDesign_Description_Tag extends \Elementor\Core\DynamicTags\Tag {
         ];
     }
 
-    protected function _register_controls() {
+    protected function register_controls() {
         $this->add_control(
             'fallback',
             [
-                'label' => 'Fallback Text',
+                'label' => __('Fallback-Text', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::TEXTAREA,
-                'default' => 'Entdecke deinen Human Design Typ für eine personalisierte Beschreibung.',
+                'default' => __('Entdecke deinen Human Design Typ für eine personalisierte Beschreibung.', 'sessiontags-humandesign'),
             ]
         );
 
         $this->add_control(
             'length',
             [
-                'label' => 'Text Länge',
+                'label' => __('Textlänge', 'sessiontags-humandesign'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'default' => 'full',
                 'options' => [
-                    'short' => 'Kurz',
-                    'full' => 'Vollständig',
+                    'short' => __('Kurz', 'sessiontags-humandesign'),
+                    'full' => __('Vollständig', 'sessiontags-humandesign'),
                 ],
             ]
         );
@@ -182,24 +182,28 @@ class HumanDesign_Description_Tag extends \Elementor\Core\DynamicTags\Tag {
 
         $descriptions = [
             'Generator' => [
-                'short' => 'Du bist hier um zu arbeiten und zu erschaffen.',
-                'full' => 'Du bist hier um zu arbeiten und zu erschaffen. Folge deiner Begeisterung und reagiere auf das Leben! Deine Sakralenergie ist deine Superkraft.'
+                'short' => 'Du bist hier, um zu arbeiten, zu erschaffen und auf das Leben zu reagieren.',
+                'full' => 'Als Generator bist du hier, um zu arbeiten und zu erschaffen. Deine Superkraft ist deine Sakralenergie. Folge deiner Begeisterung und reagiere auf die Impulse, die das Leben dir gibt, um Erfüllung zu finden.'
+            ],
+            'Manifesting Generator' => [
+                'short' => 'Du bist ein Multitalent mit Manifestationskraft und Effizienz.',
+                'full' => 'Als Manifesting Generator bist du ein energiegeladenes Multitalent mit der Kraft, zu manifestieren und zu generieren. Du kannst viele Dinge gleichzeitig tun und bist ein Meister der Effizienz. Informiere andere, bevor du handelst.'
             ],
             'ManifestingGenerator' => [
-                'short' => 'Du bist ein Multitalent mit Manifestationskraft.',
-                'full' => 'Du bist ein Multitalent mit der Kraft zu manifestieren und zu generieren. Du kannst viele Dinge gleichzeitig machen und bist ein Meister der Effizienz.'
+                'short' => 'Du bist ein Multitalent mit Manifestationskraft und Effizienz.',
+                'full' => 'Als Manifesting Generator bist du ein energiegeladenes Multitalent mit der Kraft, zu manifestieren und zu generieren. Du kannst viele Dinge gleichzeitig tun und bist ein Meister der Effizienz. Informiere andere, bevor du handelst.'
             ],
             'Projector' => [
-                'short' => 'Du bist ein natürlicher Leiter.',
-                'full' => 'Du bist ein natürlicher Leiter und Koordinator. Warte auf Anerkennung und Einladungen für deine einzigartigen Gaben. Du siehst die Menschen um dich herum sehr klar.'
+                'short' => 'Du bist ein natürlicher Leiter, der auf Anerkennung wartet.',
+                'full' => 'Als Projektor bist du ein natürlicher Leiter und Koordinator. Deine Gabe ist es, andere zu sehen und zu führen. Warte auf Anerkennung und formelle Einladungen, um deine einzigartigen Gaben erfolgreich in die Welt zu bringen.'
             ],
             'Manifestor' => [
-                'short' => 'Du bist ein Initiator.',
-                'full' => 'Du bist ein Initiator mit der Kraft, Neues zu beginnen. Informiere andere über deine Pläne und nutze deine unabhängige Natur als Stärke.'
+                'short' => 'Du bist ein unabhängiger Initiator, der Neues beginnt.',
+                'full' => 'Als Manifestor bist du ein reiner Initiator mit der Kraft, aus dem Nichts Neues zu beginnen. Deine unabhängige Natur ist deine Stärke. Um Widerstand zu vermeiden, informiere andere über deine Pläne, bevor du handelst.'
             ],
             'Reflector' => [
-                'short' => 'Du bist ein Spiegel der Gemeinschaft.',
-                'full' => 'Du bist ein seltener Spiegel der Gemeinschaft. Lass dir Zeit für wichtige Entscheidungen und vertraue auf die Weisheit des Mondzyklus.'
+                'short' => 'Du bist ein seltener Spiegel der Gemeinschaft und brauchst Zeit.',
+                'full' => 'Als seltener Reflektor bist du ein Spiegel der Gemeinschaft und ihrer Gesundheit. Du bist hier, um das Potenzial anderer zu reflektieren. Nimm dir für wichtige Entscheidungen einen vollen Mondzyklus Zeit, um Klarheit zu finden.'
             ]
         ];
 
@@ -213,62 +217,15 @@ class HumanDesign_Description_Tag extends \Elementor\Core\DynamicTags\Tag {
 /**
  * Register Dynamic Tags Group
  */
-add_action('elementor/dynamic_tags/register_tags', function($dynamic_tags_manager) {
+add_action('elementor/dynamic_tags/register', function($dynamic_tags_manager) {
 
     // Register group
     $dynamic_tags_manager->register_group('human-design', [
-        'title' => 'Human Design'
+        'title' => __('Human Design', 'sessiontags-humandesign')
     ]);
 
     // Register tags
-    $dynamic_tags_manager->register_tag('HumanDesign_Type_Tag');
-    $dynamic_tags_manager->register_tag('HumanDesign_Strategy_Tag');
-    $dynamic_tags_manager->register_tag('HumanDesign_Description_Tag');
+    $dynamic_tags_manager->register(new \HumanDesign_Type_Tag());
+    $dynamic_tags_manager->register(new \HumanDesign_Strategy_Tag());
+    $dynamic_tags_manager->register(new \HumanDesign_Description_Tag());
 });
-
-/**
- * Add Custom CSS for Dynamic Tags
- */
-add_action('wp_head', function() {
-    $type = $_SESSION['hd_type'] ?? '';
-    if (empty($type)) return;
-
-    $colors = [
-        'Generator' => ['primary' => '#e74c3c', 'secondary' => '#c0392b', 'accent' => '#f39c12'],
-        'ManifestingGenerator' => ['primary' => '#e67e22', 'secondary' => '#d35400', 'accent' => '#f1c40f'],
-        'Projector' => ['primary' => '#3498db', 'secondary' => '#2980b9', 'accent' => '#9b59b6'],
-        'Manifestor' => ['primary' => '#2ecc71', 'secondary' => '#27ae60', 'accent' => '#1abc9c'],
-        'Reflector' => ['primary' => '#9b59b6', 'secondary' => '#8e44ad', 'accent' => '#e91e63']
-    ];
-
-    $type_colors = $colors[$type] ?? $colors['Generator'];
-
-    echo "<style id='hd-dynamic-colors'>
-    :root {
-        --hd-primary: {$type_colors['primary']};
-        --hd-secondary: {$type_colors['secondary']};
-        --hd-accent: {$type_colors['accent']};
-    }
-
-    .elementor-widget-text-editor a[href*='reading-buchen'] {
-        background: var(--hd-primary) !important;
-        color: white !important;
-        padding: 12px 24px !important;
-        border-radius: 25px !important;
-        text-decoration: none !important;
-        display: inline-block !important;
-        transition: transform 0.2s ease !important;
-    }
-
-    .elementor-widget-text-editor a[href*='reading-buchen']:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
-    }
-
-    .hd-calculate-link {
-        color: var(--hd-primary) !important;
-        text-decoration: underline !important;
-    }
-    </style>";
-});
-?>
