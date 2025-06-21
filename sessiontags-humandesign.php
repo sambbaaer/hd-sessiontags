@@ -24,16 +24,40 @@ define('STHD_VERSION', '1.0.0');
 define('STHD_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('STHD_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-// Include required files
+// Always include the core engine
 require_once STHD_PLUGIN_DIR . 'includes/humandesign-engine.php';
 
-// Check if Elementor is active before loading widgets
-add_action('plugins_loaded', function() {
-    if (did_action('elementor/loaded')) {
-        require_once STHD_PLUGIN_DIR . 'includes/elementor-widgets.php';
-        require_once STHD_PLUGIN_DIR . 'includes/dynamic-tags.php';
+// Check if Elementor is active and loaded properly before loading widgets
+function sthd_load_elementor_integration() {
+    // Check if Elementor is installed and active
+    if (!class_exists('\Elementor\Plugin')) {
+        return;
     }
-});
+
+    // Wait for Elementor to be fully loaded
+    if (!did_action('elementor/loaded')) {
+        return;
+    }
+
+    // Check if required Elementor classes exist
+    if (!class_exists('\Elementor\Widget_Base') || !class_exists('\Elementor\Core\DynamicTags\Tag')) {
+        return;
+    }
+
+    // Now it's safe to load our Elementor extensions
+    require_once STHD_PLUGIN_DIR . 'includes/elementor-widgets.php';
+    require_once STHD_PLUGIN_DIR . 'includes/dynamic-tags.php';
+}
+
+// Hook into elementor/loaded action instead of plugins_loaded
+add_action('elementor/loaded', 'sthd_load_elementor_integration');
+
+// Fallback: Also try on init with a higher priority
+add_action('init', function() {
+    if (class_exists('\Elementor\Plugin') && did_action('elementor/loaded')) {
+        sthd_load_elementor_integration();
+    }
+}, 20);
 
 /**
  * Main SessionTags Human Design Class
@@ -702,6 +726,20 @@ class SessionTags_HumanDesign {
             <?php if (class_exists('SessionTags')): ?>
                 <div class="notice notice-success">
                     <p>✅ <strong>SessionTags Integration aktiv!</strong> Human Design Daten sind verfügbar über: <code>[st k="hd_type"]</code></p>
+                </div>
+            <?php else: ?>
+                <div class="notice notice-warning">
+                    <p>⚠️ <strong>SessionTags Plugin nicht gefunden!</strong> Für erweiterte Features installiere das SessionTags Plugin.</p>
+                </div>
+            <?php endif; ?>
+
+            <?php if (class_exists('\Elementor\Plugin')): ?>
+                <div class="notice notice-success">
+                    <p>✅ <strong>Elementor Integration verfügbar!</strong> Human Design Widgets und Dynamic Tags sind aktiv.</p>
+                </div>
+            <?php else: ?>
+                <div class="notice notice-info">
+                    <p>ℹ️ <strong>Elementor nicht gefunden.</strong> Installiere Elementor für erweiterte Widget-Funktionen.</p>
                 </div>
             <?php endif; ?>
         </div>
